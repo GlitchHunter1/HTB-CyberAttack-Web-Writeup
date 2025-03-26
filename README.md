@@ -310,4 +310,5 @@ Thanks for reading — until next time, happy hacking! 💻🚀
 
 
 **Connect with me:**
-🧠 [X (Twitter) - @Hacker09737393](https://x.com/Hacker09737393)
+🐦 [X (Twitter) - @Hacker09737393](https://x.com/Hacker09737393)  
+🔗 [LinkedIn - Mohammed Al-Sadi](https://www.linkedin.com/in/mohammed-al-sadi-96291a311/)
