@@ -1,4 +1,4 @@
-![[images/og-cyber-apocalypse-ctf-2025.jpg]]
+![[og-cyber-apocalypse-ctf-2025.jpg]]
 
 
 ## Challenge Description:
