@@ -121,7 +121,7 @@ Because the regex filter won’t allow us to pass `127.0.0.1` as a domain.
 
 
 
-### 3. When the Server Becomes the Assassin:
+### 4. When the Server Becomes the Assassin:
 
 It's complicated isn't?
 I've spent additional one hour trying to bypass the filter in attack-domain or access the attack-ip by manipulating the http headers in order to make my request looks like it comes from the localhost, but nothing worked!
@@ -139,7 +139,7 @@ If I could use attack-domain to trick the server into sending a request to itsel
 The weapon? A forged request. The assassin? The server itself. All I had to do was whisper the right payload.
 
 
-### 4. Finding the SSRF Vector:
+### 5. Finding the SSRF Vector:
 
 Now that I knew **what** needed to be done — it was time to figure out **how** to do it.
 
@@ -158,7 +158,7 @@ But what if I didn’t use target at all?
 💡 _What if I injected through the_ _name=_ _parameter instead?_
 
 
-### 5. Crafting the Killer Payload:
+### 6. Crafting the Killer Payload:
 
 Im not exaggerating when I say this part consumed **hours** of my life.
 
