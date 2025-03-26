@@ -1,4 +1,4 @@
-![[og-cyber-apocalypse-ctf-2025.jpg]]
+![](./images/og-cyber-apocalypse-ctf-2025.jpg)
 
 
 ## Challenge Description:
