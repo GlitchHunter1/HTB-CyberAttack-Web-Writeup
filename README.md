@@ -35,7 +35,7 @@ After a quick of review the files and directories there, I knew that the vulnera
 The application where trying to ping the ip or domain specified by the user as following:
 
 **attack-ip:**
-![](./images/Screenshot 2025-03-25 at 11.56.40 PM.png)
+![](./images/"Screenshot 2025-03-25 at 11.56.40 PM.png")
 
 
 **attack-domain:**
