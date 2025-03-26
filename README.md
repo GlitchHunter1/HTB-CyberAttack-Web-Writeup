@@ -35,11 +35,11 @@ After a quick of review the files and directories there, I knew that the vulnera
 The application where trying to ping the ip or domain specified by the user as following:
 
 **attack-ip:**
-![](./images/"Screenshot 2025-03-25 at 11.56.40 PM.png")
+![](./images/Screenshot_2025-03-25_at_11.56.40_PM.png)
 
 
 **attack-domain:**
-![](./images/Screenshot 2025-03-26 at 11.09.45 AM.png)
+![](./images/Screenshot_2025-03-26_at_11.09.45_AM.png)
 
 
 It’s clear that **both attack-domain and attack-ip are vulnerable to command injection**. If we input something like 127.0.0.1; whoami into the target parameter, the resulting command executed by the server becomes: `ping -c 1 127.0.0.1; whoami` and boom 🔥 We should have command injection.
@@ -67,7 +67,7 @@ So it looks like it is impossible to exploit command injection in **attack-domai
 
 While **attack-domain** has a strong filter, the **attack-ip** hasn't any filter and once we could inject our command in the target, it must be executed directly. Sounds great isn't? Guess what? We have another problem! While I was reviewing the source code of the challenge. I noticed another annoying thing. **attack-ip can only be accessed by localhost!** you need to be localhost in order to be able to access it and then inject your command.
 
-![](./images/Screenshot 2025-03-26 at 1.16.32 PM.png)
+![](./images/Screenshot_2025-03-26_at_1.16.32_PM.png)
 
 
 Things got complicated isn't? we can **access attack-domain but it has strong filter** and we cannot inject our payload. On the other hand, **attack-ip has no filter, but It must be accessed by the localhost** which is the server itself.
@@ -77,13 +77,13 @@ Things got complicated isn't? we can **access attack-domain but it has strong fi
 
 Let's have a look to the website.
 
-![](./images/Screenshot 2025-03-26 at 1.33.12 PM.png)
+![](./images/Screenshot_2025-03-26_at_1.33.12_PM.png)
 
 
 As you can see, we have access to attack-domain only, let's try to inject our payload, and see what happen. 
 We will use Burp Suite of course.
 
-![](./images/Screenshot 2025-03-26 at 1.33.27 PM.png)
+![](./images/Screenshot_2025-03-26_at_1.33.27_PM.png)
 
 
 As I thought, we have a strong filter in attack-domain. And it is impossible to bypass it.
@@ -231,14 +231,14 @@ We don't have VPN connection to the target, so we cannot get a reverse shell dir
 
 
 ###### **Setting-up Ngrok to get reverse shell**
-![](./images/Screenshot 2025-03-26 at 9.15.51 PM.png)
+![](./images/Screenshot_2025-03-26_at_9.15.51_PM.png)
 
 
-![](./images/Screenshot 2025-03-26 at 9.17.35 PM 1.png)
+![](./images/Screenshot_2025-03-26_at_9.17.35_PM_1.png)
 
 
 And we got the following window:
-![](./images/Screenshot 2025-03-26 at 9.18.11 PM.png)
+![](./images/Screenshot_2025-03-26_at_9.18.11_PM.png)
 
 
 So we are gonna use the following host: **0.tcp.in.ngrok.io**, and the following port: **4040** as the ip, and port to get a reverse shell to our machine.
@@ -278,7 +278,7 @@ www-data
 And just like that — we were in. We popped a shell on Malakar’s fortress.
 
 The flag? Sitting right there:
-![](./images/Image 24-03-2025 at 5.04 AM 2.jpg)
+![](./images/Image_24-03-2025_at_5.04_AM_2.jpg)
 Game over.
 
 
