@@ -1,4 +1,5 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/GlitchHunter1/HTB-CyberAttack-Web-Writeup/main/images/og-image.jpg" />
+![](./images/og-image.jpg)
 
 ## Challenge Description:
 
