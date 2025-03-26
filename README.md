@@ -282,6 +282,8 @@ Game over.
 
 
 
+
+
 ### **🔚 Final Thoughts: The Art of Exploiting Shadows**
 
 
@@ -306,6 +308,8 @@ And the flag? HTB{h4ndl1n6_m4l4k4r5_f0rc35} — a symbol that **even in the dark
 
   
 Thanks for reading — until next time, happy hacking! 💻🚀
+
+
 
 
 
