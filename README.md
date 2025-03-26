@@ -314,7 +314,7 @@ Game over.
 
 
 
-### **🔚 Final Thoughts: The Art of Exploiting Shadows**
+## **🔚 Final Thoughts: The Art of Exploiting Shadows**
 
 
 This wasn’t just a CTF challenge — it was a battle of wit, patience, and obsession. _Cyber Attack_ was a **masterclass in modern web exploitation** — an intricate blend of:
