@@ -29,7 +29,7 @@ tl;dr: In CTFs it’s often not only the source code for the challenge and the o
 
 After a quick of review the files and directories there, I knew that the vulnerability that we are gonna exploit is command injection. Yeah command injection!
 
-**attack-domain** and **attack-ip** under **/src/cgi-bin** directory where both seem to be vulnerable to command injection!
+**attack-domain** and **attack-ip** under **/src/cgi-bin** directory were both seem to be vulnerable to command injection!
 
 The application where trying to ping the ip or domain specified by the user as following:
 
