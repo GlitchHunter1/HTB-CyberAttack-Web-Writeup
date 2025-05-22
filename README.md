@@ -31,7 +31,7 @@ After a quick of review the files and directories there, I knew that the vulnera
 
 **attack-domain** and **attack-ip** under **/src/cgi-bin** directory were both seem to be vulnerable to command injection!
 
-The application where trying to ping the ip or domain specified by the user as following:
+The application were trying to ping the ip or domain specified by the user as following:
 
 **attack-ip:**
 ![](./images/Screenshot_2025-03-25_at_11.56.40_PM.png)
